@@ -16,9 +16,9 @@ func UploadArduino(port string, cardType string, inputFile string) {
 
 	out, err := exec.Command(cmd).Output()
 	if err != nil {
-		log.Fatal("%s", err)
+		log.Fatal(err)
 	}
-	fmt.Println("Program executed")
+	fmt.Println("Upload Sucessful")
 	output := string(out[:])
 	fmt.Println(output)
 }
