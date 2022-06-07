@@ -1,1 +1,4 @@
-build
+*.hex
+*.bin
+*.eep
+*.elf
