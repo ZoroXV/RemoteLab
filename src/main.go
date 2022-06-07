@@ -1,12 +1,12 @@
 package main
 
 import (
-    "fmt"
+	"fmt"
 
-    "remotelab/upload"
+	"remotelab/upload"
 )
 
 func main() {
-    message := upload.UploadInit()
-    fmt.Println(message)
+	message := upload.UploadInit()
+	fmt.Println(message)
 }
