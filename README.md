@@ -1,9 +1,9 @@
 # RemoteLab
 
 ## Authors
-* Etienne CHANUDET
-* Victor LE CORRE
-* Vincent MUSCEDERE
+* Etienne CHANUDET (etienne.chanudet@epita.fr)
+* Victor LE CORRE (victor.le-corre@epita.fr)
+* Vincent MUSCEDERE (vincent.muscedere@epita.fr)
 
 ## Git Good Practices
 
