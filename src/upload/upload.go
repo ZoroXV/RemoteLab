@@ -12,9 +12,14 @@ func UploadInit() {
 }
 
 func UploadArduino(port string, cardType string, inputFile string) {
-	cmd := "arduino-cli upload -p " + port + " --fqbn " + cardType + " --input-file " + inputFile
+	cmd := exec.Command(
+		"arduino-cli",
+		"upload",
+		"-p", port,
+		"--fqbn", cardType,
+		"--input-file", inputFile)
 
-	out, err := exec.Command(cmd).Output()
+	out, err := cmd.Output()
 	if err != nil {
 		log.Fatal(err)
 	}
