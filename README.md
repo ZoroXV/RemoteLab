@@ -16,3 +16,11 @@ We use this [article](https://buzut.net/cours/versioning-avec-git/bien-nommer-se
 - Never merge **BROKEN** code on `master`
 - Code on new branch for each feature
 - Make **Pull Request** and get reviewed by the others
+
+## Build & Run Project
+
+### Build Docker Image
+`docker build . -t remotelab`
+
+### Run Docker Image & Launch Server
+`docker run -p 8080:80 remotelab`
