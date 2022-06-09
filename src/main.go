@@ -25,13 +25,7 @@ func main() {
 
     for _, serv := range servers {
 	if serv.Protocol == server.REST {
-	    restUploadFileHandler := rest.RestUploadFileHandler{}
-	    serv.AddHandler("/uploadfile", restUploadFileHandler)
-	    
-	    restCommandHandler := rest.RestCommandHandler{}
-	    serv.AddHandler("/command/upload", restCommandHandler)
-
-	    serv.Run()
+	    rest.RunREST(serv)
 	}
     }
 }

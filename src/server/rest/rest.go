@@ -145,3 +145,13 @@ func (this RestCommandHandler) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	w.WriteHeader(http.StatusMethodNotAllowed)
     }
 }
+
+func RunREST(serv server.Server) {
+    restUploadFileHandler := RestUploadFileHandler{}
+    serv.AddHandler("/uploadfile", restUploadFileHandler)
+
+    restCommandHandler := RestCommandHandler{}
+    serv.AddHandler("/command/upload", restCommandHandler)
+
+    serv.Run()
+}
