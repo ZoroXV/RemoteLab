@@ -1,18 +1,37 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
+    "log"
+    "os"
+
+    "remotelab/server"
+    "remotelab/server/rest"
+)
+
+var (
+    DEFAULT_CONFIG_FILE string = "./config.json"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
-		fmt.Fprintf(w, "Hello from Server!")
-	})
+    configFile := DEFAULT_CONFIG_FILE
 
-	fmt.Printf("Starting server at port 80\n")
-	if err := http.ListenAndServe(":80", nil); err != nil {
-		log.Fatal(err)
+    if len(os.Args) == 2 {
+	configFile = os.Args[1]
+    } else if len(os.Args) > 2 {
+	log.Fatalf("[MAIN][ERR] Too much arguments.\n Use: %s [<config_file>]\n", os.Args[0])
+    }
+
+    servers := server.CreateServers(configFile)
+
+    for _, serv := range servers {
+	if serv.Protocol == server.REST {
+	    restUploadFileHandler := rest.RestUploadFileHandler{}
+	    serv.AddHandler("/uploadfile", restUploadFileHandler)
+	    
+	    restCommandHandler := rest.RestCommandHandler{}
+	    serv.AddHandler("/command/upload", restCommandHandler)
+
+	    serv.Run()
 	}
+    }
 }
