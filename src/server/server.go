@@ -15,7 +15,7 @@ func (this *Server) runServer(handler http.Handler) {
 
     if err := http.ListenAndServe(fmt.Sprintf(":%v", this.Port), handler); err != nil {
 	this.Running = false
-	log.Printf("[%s][HTTP][ERR] Cannot launch server on %s:%s.\n\t%v\n", this.Protocol, hostname, this.Port)
+	log.Printf("[%s][HTTP][ERR] Cannot launch server on %s:%s.\n\t%v\n", this.Protocol, hostname, this.Port, err)
     }
 }
 
