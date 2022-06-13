@@ -1,5 +1,5 @@
 package server
 
 var (
-    ROOT_FILE_PATH string = "./bin"
+	ROOT_FILE_PATH string = "./bin"
 )
