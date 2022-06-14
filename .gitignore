@@ -1,3 +1,7 @@
 build
 bin
 *.json
+*.hex
+*.bin
+*.eep
+*.elf

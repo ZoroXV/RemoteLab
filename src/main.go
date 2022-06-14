@@ -6,6 +6,7 @@ import (
 
 	"remotelab/server"
 	"remotelab/server/rest"
+	//"remotelab/upload"
 )
 
 var (
@@ -28,4 +29,9 @@ func main() {
 			rest.RunREST(serv)
 		}
 	}
+
+	//upload.UploadInit()
+
+	//upload.UploadArduino("COM3", "arduino:avr:uno",
+	//	"/home/victor/Documents/RemoteLab/controllers/arduino/blink_1/blink_1.ino.with_bootloader.bin")
 }
