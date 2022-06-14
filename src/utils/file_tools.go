@@ -17,6 +17,15 @@ func FileExists(directory string, filename string) bool {
 	return !info.IsDir()
 }
 
+func GetFullPath(directory string, filename string) string {
+    rootPath, _ := os.Getwd()
+
+    path := filepath.Join(directory, filename)
+    path = filepath.Join(rootPath, path)
+
+    return path
+}
+
 func DirExists(dirname string) bool {
 	info, err := os.Stat(dirname)
 	if os.IsNotExist(err) {

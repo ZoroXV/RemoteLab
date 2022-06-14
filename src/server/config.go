@@ -32,7 +32,7 @@ func ParseConfigFile(configFile string) []Server {
 	for _, e := range data.Vhosts {
 		server := Server {
 			Protocol:	Protocol(e.Protocol),
-			Port:	e.Port,
+			Port:   	e.Port,
 			Running:	false,
 			Handlers:	nil,
 		}

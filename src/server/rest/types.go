@@ -1,10 +1,9 @@
 package rest
 
 type RestUploadFileHandler struct {}
-type RestCommandHandler struct {}
+type RestUploadHandler struct {}
 
-type restRequest struct {
-	Command       string `json:"command"`
+type restUploadRequest struct {
 	Port          string `json:"port"`
 	Fqbn          string `json:"fqbn"`
 	FileName      string `json:"filename"`

@@ -7,7 +7,6 @@ import (
     "io/ioutil"
     "log"
     "net/http"
-    "path/filepath"
 
     "remotelab/utils"
     "remotelab/server"
@@ -67,15 +66,11 @@ func uploadCommand(port string, fqbn string, filename string) error {
         return errors.New(fmt.Sprintf("File '%s' does not exists. Upload the file before running this command again.", filename))
     }
 
-    return upload.UploadArduino(port, fqbn, filepath.Join(server.ROOT_FILE_PATH, filename))
+    return upload.UploadArduino(port, fqbn, utils.GetFullPath(server.ROOT_FILE_PATH, filename))
 }
 
-func handleCommandGET(w http.ResponseWriter, r *http.Request) {
-    w.WriteHeader(http.StatusMethodNotAllowed)
-}
-
-func handleCommandPOST(w http.ResponseWriter, r *http.Request) {
-    var newReq restRequest
+func handleUpload(w http.ResponseWriter, r *http.Request) {
+    var newReq restUploadRequest
     resp := restResponse {
         Status:	    "OK",
         Message:    "",
@@ -102,25 +97,13 @@ func handleCommandPOST(w http.ResponseWriter, r *http.Request) {
                 Message:    fmt.Sprintf("Fail to decode json. %v", err),
             }
         } else {
-            var err error
-
-            switch newReq.Command {
-            case "UPLOAD":
-                err = uploadCommand(newReq.Port, newReq.Fqbn, newReq.FileName)
-
-            default:
-                returnCode = http.StatusBadRequest
-                resp = restResponse {
-                    Status:	    "ERROR",
-                    Message:    fmt.Sprintf("Invalid command '%s'.", newReq.Command),
-                }
-            }
+            err := uploadCommand(newReq.Port, newReq.Fqbn, newReq.FileName)
 
             if err != nil {
                 returnCode = http.StatusInternalServerError
                 resp = restResponse {
                     Status: "ERROR",
-                    Message: fmt.Sprintf("Something went wrong when executing the command '%s'. %v", newReq.Command, err),
+                    Message: fmt.Sprintf("Something went wrong when executing the upload command. %v", err),
                 }
             }
         }
@@ -136,11 +119,9 @@ func handleCommandPOST(w http.ResponseWriter, r *http.Request) {
     w.Write(jsonResp)
 }
 
-func (this RestCommandHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-    if r.Method == "GET" {
-        handleCommandGET(w, r)
-    } else if r.Method == "POST"{
-        handleCommandPOST(w, r)
+func (this RestUploadHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+    if r.Method == "POST"{
+        handleUpload(w, r)
     } else {
         w.WriteHeader(http.StatusMethodNotAllowed)
     }
@@ -150,8 +131,8 @@ func RunREST(serv server.Server) {
     restUploadFileHandler := RestUploadFileHandler{}
     serv.AddHandler("/uploadfile", restUploadFileHandler)
 
-    restCommandHandler := RestCommandHandler{}
-    serv.AddHandler("/command/upload", restCommandHandler)
+    restUploadHandler := RestUploadHandler{}
+    serv.AddHandler("/command/upload", restUploadHandler)
 
     serv.Run()
 }
