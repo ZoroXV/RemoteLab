@@ -15,7 +15,6 @@ Use `application/json` content type.
 Format:
 ```json
 {
-    "command": "<command>",
     "port": "<port>",
     "fqbn": "<fqbn>",
     "filename": "<filename>"
@@ -23,7 +22,6 @@ Format:
 ``` 
 
 Fields:
-- `command`: The command to execute 
 - `port`: The port on which the card is linked (ex: "/dev/ttyUSB0")
 - `fqbn`: The type of the card, following the names of the `arduino-cli` (ex: "arduino:avr:uno")
 - `filename`: The name of the binary file to upload on the card (the file should be uploaded on the server before)
