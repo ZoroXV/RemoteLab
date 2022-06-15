@@ -7,6 +7,7 @@ import (
     "io/ioutil"
     "log"
     "net/http"
+    "sync"
 
     "remotelab/utils"
     "remotelab/server"
@@ -127,12 +128,12 @@ func (this RestUploadHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
     }
 }
 
-func RunREST(serv server.Server) {
+func RunREST(serv server.Server, wg *sync.WaitGroup) {
     restUploadFileHandler := RestUploadFileHandler{}
     serv.AddHandler("/uploadfile", restUploadFileHandler)
 
     restUploadHandler := RestUploadHandler{}
     serv.AddHandler("/command/upload", restUploadHandler)
 
-    serv.Run()
+    serv.Run(wg)
 }

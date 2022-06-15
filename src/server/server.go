@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+        "sync"
 )
 
 func (this *Server) runServer(handler http.Handler) {
@@ -23,7 +24,8 @@ func CreateServers(configFile string) []Server {
 	return ParseConfigFile(configFile)
 }
 
-func (this *Server) Run() {
+func (this *Server) Run(wg *sync.WaitGroup) {
+        defer wg.Done()
 	s := http.NewServeMux()
 
 	for _, h := range this.Handlers {
