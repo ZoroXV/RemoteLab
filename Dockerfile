@@ -15,7 +15,5 @@ RUN curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/inst
 COPY ./src /app
 WORKDIR /app
 
-EXPOSE 80
-
 RUN /usr/local/go/bin/go build
 CMD ./remotelab
