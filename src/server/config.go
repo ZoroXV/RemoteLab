@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+
+	"remotelab/utils"
 )
 
 func ParseConfigFile(configFile string) []Server {
@@ -41,4 +43,26 @@ func ParseConfigFile(configFile string) []Server {
 	}
 
 	return result
+}
+
+func CreateDefaultConfig(filename string) error {
+	rootPath, _ := os.Getwd()
+
+	if utils.FileExists(rootPath, filename) {
+		return nil
+	}
+
+	outputFile, err := os.OpenFile(filename, os.O_WRONLY | os.O_CREATE, 0666)
+	if err != nil {
+		return err
+	}
+
+	defer outputFile.Close()
+
+	_, err = outputFile.WriteString(`{"vhosts":[{"protocol":"REST","port":"8080"}]}`)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
