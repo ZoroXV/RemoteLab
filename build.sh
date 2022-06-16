@@ -8,5 +8,5 @@ docker container rm -f extract
 
 echo Building remotelab:latest
 
-docker build --no-cache -t remotelab:latest .
+docker build -t remotelab:latest .
 rm ./remotelab
