@@ -20,7 +20,12 @@ We use this [article](https://buzut.net/cours/versioning-avec-git/bien-nommer-se
 ## Build & Run Project
 
 ### Build Docker Image
-`docker build . -t remotelab`
+```sh
+./build.sh
+```
 
 ### Run Docker Image & Launch Server
-`docker run -p 8080:80 remotelab`
+```sh
+docker run -p 8080:80 --privileged remotelab:latest
+```
+The `--privileged` parameter allows the docker container to access to all usb devices.
