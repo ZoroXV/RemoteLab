@@ -26,6 +26,5 @@ We use this [article](https://buzut.net/cours/versioning-avec-git/bien-nommer-se
 
 ### Run Docker Image & Launch Server
 ```sh
-docker run -p 8080:80 --privileged remotelab:latest
+docker run -p 8080:80 -v /dev:/dev -v /run/udev:/run/udev:ro --device-cgroup-rule='c 188:* rmw' remotelab:latest
 ```
-The `--privileged` parameter allows the docker container to access to all usb devices.
