@@ -20,8 +20,9 @@ We use this [article](https://buzut.net/cours/versioning-avec-git/bien-nommer-se
 ## Build & Run Project
 
 ### Build Docker Image
+#### Release
 ```sh
-./build.sh
+docker build --target release -t remotelab:latest .
 ```
 
 ### Run Docker Image & Launch Server

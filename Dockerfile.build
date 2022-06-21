@@ -1,4 +1,0 @@
-FROM golang:1.18.3-bullseye
-WORKDIR /app
-COPY ./src /app
-RUN go build
