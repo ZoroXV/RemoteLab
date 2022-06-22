@@ -19,13 +19,7 @@ We use this [article](https://buzut.net/cours/versioning-avec-git/bien-nommer-se
 
 ## Build & Run Project
 
-### Build Docker Image
-#### Release
+### Run Docker Image in RELEASE mode
 ```sh
-docker build --target release -t remotelab:latest .
-```
-
-### Run Docker Image & Launch Server
-```sh
-docker run -p 8080:80 -v /dev:/dev -v /run/udev:/run/udev:ro --device-cgroup-rule='c 188:* rmw' remotelab:latest
+docker compose up release
 ```
