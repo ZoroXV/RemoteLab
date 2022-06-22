@@ -1,0 +1,15 @@
+services:
+  release:
+    container_name: remotelab_release
+    ports:
+      - "8080:8080"
+    volumes:
+      - /dev:/dev
+      - /run/udev:/run/udev:ro 
+    device_cgroup_rules:
+      - 'c 188:* rmw'
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: release 
+
