@@ -1,9 +1,13 @@
 {% block upload_binary %}
     <div class="widget">
-        <span class="widget-title">Upload Binary</span>
-        <form>
-            <input type="file">
-            <input type="submit" value="Submit">
-        </form>
+        <div class="widget-title">
+            <p>Upload Binary</p>
+        </div>
+        <div class="widget-content">
+            <form>
+                <input type="file" name="file" id="file" class="inputfile"/>
+                <label for="file">Choose a file</label>
+            </form>
+        </div>
     </div>
-{% endblock%}
+{% endblock %}
