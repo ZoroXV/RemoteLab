@@ -1,0 +1,17 @@
+{% block upload_command %}
+    <div class="widget">
+        <div class="widget-title">
+            <p>Upload Command</p>
+        </div>
+        <div class="widget-content">
+            <form action="/upload_command" method="POST">
+                <div>
+                    <label>Port: <input type="text" name="port"></label>
+                    <label>Fqbn: <input type="text" name="fqbn"></label>
+                    <label>Filename: <input type="text" name="filename"></label>
+                    <input type="submit" value="Upload">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
