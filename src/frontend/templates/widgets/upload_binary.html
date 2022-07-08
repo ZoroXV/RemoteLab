@@ -4,9 +4,11 @@
             <p>Upload Binary</p>
         </div>
         <div class="widget-content">
-            <form>
-                <input type="file" name="file" id="file" class="inputfile"/>
-                <label for="file">Choose a file</label>
+            <form action="/upload_binary" method="POST" enctype = "multipart/form-data">
+                <div>
+                    <label>Choose a file: <input type="file" name="file"/></label>
+                    <input type="submit" value="Upload">
+                </div>
             </form>
         </div>
     </div>
