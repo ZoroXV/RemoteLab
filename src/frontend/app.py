@@ -1,4 +1,4 @@
-from flask import  Flask, render_template, request, json
+from flask import *
 
 app = Flask(__name__)
 
@@ -13,8 +13,10 @@ def upload_command():
 
 @app.route('/upload_binary', methods=["POST"])
 def upload_binary():
-    data = request.form
-    return data
+    uploaded_file = request.files['file']
+    if uploaded_file.filename != '':
+        uploaded_file.save(uploaded_file.filename)
+    return "Sucess"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
