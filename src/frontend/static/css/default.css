@@ -15,21 +15,31 @@ body {
     margin-bottom: 50px;
 }
 
+.widgets {
+    display: flex;
+    flex-direction: row;
+}
+
 .widget {
     background-color: white;
     border: 1px solid #bacdd8;
     width: 50%;
     display: flex;
     flex-direction: column;
-    height: 250px;
+    height: 50vh;
+    margin: 0px 1%;
 }
 
 .widget-title {
-    height: 30%;
+    height: 20%;
     background-color: #bacdd8;
     text-align: center;
 }
 
 .widget-content {
     padding: 2px 16px;
+}
+
+.widget input {
+    display: block;
 }
