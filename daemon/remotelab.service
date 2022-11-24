@@ -1,0 +1,11 @@
+[Unit]
+Description=Launcher of the Server
+
+[Service]
+WorkingDirectory=/ #Path to .sh files
+ExecStart= /bin/bash /chemin/to/launch.sh
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
