@@ -1,9 +1,9 @@
 [Unit]
-Description=Launcher of the Server
+Description=RemoteLab Server
 
 [Service]
-WorkingDirectory=/ #Path to .sh files
-ExecStart= /bin/bash /chemin/to/launch.sh
+WorkingDirectory=/home/remotelab/RemoteLab/
+ExecStart= /bin/bash /usr/bin/remotelab.sh
 Restart=on-failure
 RestartSec=10
 
