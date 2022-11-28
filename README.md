@@ -23,3 +23,9 @@ We use this [article](https://buzut.net/cours/versioning-avec-git/bien-nommer-se
 ```sh
 docker compose up release
 ```
+
+### Raspberry Pi Daemon
+
+We use a simple daemon to launch our server at the start of the Raspberry Pi.
+Our daemon will restart the server if a error occur.
+Our daemon execute a simple bash script that run our Docker Image.
