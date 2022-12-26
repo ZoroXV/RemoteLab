@@ -1,6 +1,7 @@
 FROM golang:1.18.3-bullseye as builder
 WORKDIR /app
 COPY ./src /app
+RUN ["go", "get", "-v", "github.com/google/gousb{,/usbid}"]
 RUN ["go", "build"]
 
 FROM debian:bullseye as release

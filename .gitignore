@@ -5,3 +5,5 @@ bin
 *.bin
 *.eep
 *.elf
+go.sum
+*.swp
