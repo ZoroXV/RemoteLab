@@ -2,6 +2,7 @@ package upload
 
 import (
 	"errors"
+	"fmt"
 )
 
 type VendorProduct struct {
@@ -22,6 +23,6 @@ func GetFqbn(VendorID uint16, ProductID uint16) (string, error) {
 	if exist {
 		return val, nil
 	} else {
-		return "", errors.New("Tuple VendorID ProductID is not in the LookUp Table.")
+		return "", errors.New(fmt.Sprintf("{0x%04x, 0x%04x} is an unknown {VendorID, ProductID} pair.", VendorID, ProductID))
 	}
 }

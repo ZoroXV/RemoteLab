@@ -142,7 +142,7 @@ func (this RestListControllersHandler) ServeHTTP(w http.ResponseWriter, r *http.
                 fqbn = fmt.Sprint(err)
             }
 
-            resp := append(resp, restMicroControllerInfo{
+            resp = append(resp, restMicroControllerInfo{
                 VendorName: controller.VendorName,
 	            ProductName: controller.ProductName,
 	            Port: controller.Port,
