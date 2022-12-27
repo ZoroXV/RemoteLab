@@ -136,7 +136,7 @@ func (this RestListControllersHandler) ServeHTTP(w http.ResponseWriter, r *http.
         resp := restMicroControllersList{
             Status: "OK",
             Message: "",
-            Data: [],
+            Data: []restMicroControllerInfo{},
         }
 
         for _, controller := range microContInfos {
