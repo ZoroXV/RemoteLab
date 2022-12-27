@@ -12,6 +12,7 @@ import (
     "remotelab/utils"
     "remotelab/server"
     "remotelab/upload"
+    "remotelab/monitor"
 )
 
 func fileSave(r *http.Request) error {
@@ -32,9 +33,7 @@ func fileSave(r *http.Request) error {
 }
 
 func (this RestUploadFileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-    if r.Method == "GET" {
-        w.WriteHeader(http.StatusMethodNotAllowed)
-    } else {
+    if r.Method == "POST" {
         resp := restResponse {
             Status:	"OK",
             Message:    "",
@@ -59,6 +58,8 @@ func (this RestUploadFileHandler) ServeHTTP(w http.ResponseWriter, r *http.Reque
         w.Header().Set("Content-Type", "application/json")
         w.WriteHeader(returnCode)
         w.Write(jsonResp)
+    } else {
+        w.WriteHeader(http.StatusMethodNotAllowed)
     }
 }
 
@@ -121,8 +122,43 @@ func handleUpload(w http.ResponseWriter, r *http.Request) {
 }
 
 func (this RestUploadHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-    if r.Method == "POST"{
+    if r.Method == "POST" {
         handleUpload(w, r)
+    } else {
+        w.WriteHeader(http.StatusMethodNotAllowed)
+    }
+}
+
+func (this RestListControllersHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+    if r.Method == "GET" {
+        microContInfos := monitor.ListMicrocontrollers()
+
+        var resp []restMicroControllerInfo
+
+        for _, controller := range microContInfos {
+            fqbn, err := upload.GetFqbn(controller.VendorID, controller.ProductID)
+
+            if err != nil {
+                fqbn = fmt.Sprint(err)
+            }
+
+            resp := append(resp, restMicroControllerInfo{
+                VendorName: controller.VendorName,
+	            ProductName: controller.ProductName,
+	            Port: controller.Port,
+	            Fqbn: fqbn,
+            })
+        }
+
+        jsonResp, err := json.Marshal(resp)
+
+        if err != nil {
+            log.Fatalf("[REST][HANDLE_REQUEST][ERR] Fail to encode json.\n\t%v\n", err)
+        }
+    
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+        w.Write(jsonResp)
     } else {
         w.WriteHeader(http.StatusMethodNotAllowed)
     }
@@ -134,6 +170,9 @@ func RunREST(serv server.Server, wg *sync.WaitGroup) {
 
     restUploadHandler := RestUploadHandler{}
     serv.AddHandler("/command/upload", restUploadHandler)
+
+    restListControllersHandler := RestListControllersHandler{}
+    serv.AddHandler("/command/list_controllers", restListControllersHandler)
 
     serv.Run(wg)
 }
