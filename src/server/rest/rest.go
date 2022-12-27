@@ -133,7 +133,11 @@ func (this RestListControllersHandler) ServeHTTP(w http.ResponseWriter, r *http.
     if r.Method == "GET" {
         microContInfos := monitor.ListMicrocontrollers()
 
-        var resp []restMicroControllerInfo
+        resp := restMicroControllersList{
+            Status: "OK",
+            Message: "",
+            Data: [],
+        }
 
         for _, controller := range microContInfos {
             fqbn, err := upload.GetFqbn(controller.VendorID, controller.ProductID)
@@ -142,7 +146,7 @@ func (this RestListControllersHandler) ServeHTTP(w http.ResponseWriter, r *http.
                 fqbn = fmt.Sprint(err)
             }
 
-            resp = append(resp, restMicroControllerInfo{
+            resp.Data = append(resp.Data, restMicroControllerInfo{
                 VendorName: controller.VendorName,
 	            ProductName: controller.ProductName,
 	            Port: controller.Port,
