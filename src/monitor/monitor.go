@@ -8,6 +8,7 @@ import (
 	"github.com/google/gousb/usbid"
 	"github.com/citilinkru/libudev"
 	"github.com/citilinkru/libudev/matcher"
+	"golang.org/x/exp/slices"
 )
 
 const (
@@ -16,6 +17,11 @@ const (
 	RULE_MODEL_ID = "ID_MODEL_ID"
 	ARDUINO_VENDOR_ID gousb.ID = 0x2341
 	STM32_VENDOR_ID gousb.ID = 0x0483
+	WCH_VENDOR_ID gousb.ID = 0x1a86 //Correpond to CH340 Serial Converter
+)
+
+var (
+	vendorIds = []gousb.ID{ARDUINO_VENDOR_ID, STM32_VENDOR_ID, WCH_VENDOR_ID}
 )
 
 func ListMicrocontrollers() []microControllerInfos {
@@ -26,7 +32,7 @@ func ListMicrocontrollers() []microControllerInfos {
 
 	_, err := ctx.OpenDevices(func(desc *gousb.DeviceDesc) bool {
 
-		if desc.Vendor == ARDUINO_VENDOR_ID || desc.Vendor == STM32_VENDOR_ID {
+		if slices.Contains(vendorIds, desc.Vendor) {
 			vendor, _ := usbid.Vendors[desc.Vendor]
 			product, _ := vendor.Product[desc.Product]
 
