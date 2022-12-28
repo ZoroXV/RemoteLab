@@ -8,6 +8,7 @@ import (
     "log"
     "net/http"
     "sync"
+    "time"
 
     "remotelab/utils"
     "remotelab/server"
@@ -168,6 +169,62 @@ func (this RestListControllersHandler) ServeHTTP(w http.ResponseWriter, r *http.
     }
 }
 
+func listMicrocontrollersStream(microContInfos chan []microControllerInfos) {
+    for {
+        microContInfos <- ListMicrocontrollers()
+        time.Sleep(1 * time.Second)
+    }
+}
+
+func (this RestListControllersHandlerStream) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+    if r.Method == "GET" {
+        microContInfos := make(chan []microControllerInfos)
+        go listMicrocontrollersStream(microContInfos)
+
+        w.Header().Set("Access-Control-Allow-Origin", "*")
+        w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+        w.Header().Set("Content-Type", "application/json")
+        w.Header().Set("Cache-Control", "no-cache")
+        w.Header().Set("Connection", "keep-alive")
+
+        for {
+            resp := restMicroControllersList{
+                Status: "OK",
+                Message: "",
+                Data: []restMicroControllerInfo{},
+            }
+
+            for _, controller := range <-microContInfos {
+                fqbn, err := upload.GetFqbn(controller.VendorID, controller.ProductID)
+    
+                if err != nil {
+                    fqbn = fmt.Sprint(err)
+                }
+    
+                resp.Data = append(resp.Data, restMicroControllerInfo{
+                    VendorName: controller.VendorName,
+                    ProductName: controller.ProductName,
+                    Port: controller.Port,
+                    Fqbn: fqbn,
+                })
+            }
+
+            jsonResp, err := json.Marshal(resp)
+
+            if err != nil {
+                log.Fatalf("[REST][HANDLE_REQUEST][ERR] Fail to encode json.\n\t%v\n", err)
+            }
+        
+            w.WriteHeader(http.StatusOK)
+            w.Write(jsonResp)
+            
+            time.Sleep(1 * time.Second)
+        }
+    } else {
+        w.WriteHeader(http.StatusMethodNotAllowed)
+    }
+}
+
 func RunREST(serv server.Server, wg *sync.WaitGroup) {
     restUploadFileHandler := RestUploadFileHandler{}
     serv.AddHandler("/uploadfile", restUploadFileHandler)
@@ -177,6 +234,9 @@ func RunREST(serv server.Server, wg *sync.WaitGroup) {
 
     restListControllersHandler := RestListControllersHandler{}
     serv.AddHandler("/command/list_controllers", restListControllersHandler)
+
+    restListControllersHandlerStream := RestListControllersHandlerStream{}
+    serv.AddHandler("/command/list_controllers/stream", restListControllersHandlerStream)
 
     serv.Run(wg)
 }
