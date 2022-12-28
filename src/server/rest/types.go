@@ -3,6 +3,7 @@ package rest
 type RestUploadFileHandler struct {}
 type RestUploadHandler struct {}
 type RestListControllersHandler struct {}
+type RestListControllersHandlerStream struct {}
 
 type restUploadRequest struct {
 	Port          string `json:"port"`
