@@ -11,13 +11,15 @@ type VendorProduct struct {
 }
 
 var (
-	LutVendorProductFqbn = map[VendorProduct]string{
-		VendorProduct{0x2341, 0x0042}: "arduino:avr:mega",
-		VendorProduct{0x2341, 0x0043}: "arduino:avr:uno",
+	LutVendorProductFqbn = map[VendorProduct][]string{
+		VendorProduct{0x2341, 0x0042}: []string{"arduino:avr:mega"},
+		VendorProduct{0x2341, 0x0043}: []string{"arduino:avr:uno"},
+		VendorProduct{0x1a86, 0x7523}: []string{"arduino:avr:mega", "arduino:avr:nano", "arduino:avr:uno"}
+
 	}
 )
 
-func GetFqbn(VendorID uint16, ProductID uint16) (string, error) {
+func GetFqbn(VendorID uint16, ProductID uint16) ([]string, error) {
 	val, exist := LutVendorProductFqbn[VendorProduct{VendorID, ProductID}]
 
 	if exist {

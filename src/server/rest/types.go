@@ -19,7 +19,7 @@ type restMicroControllerInfo struct {
 	VendorName    string `json:"vendor_name"`
 	ProductName   string `json:"product_name"`
 	Port 		  string `json:"port"`
-	Fqbn          string `json:"fqbn"`
+	Fqbn          []string `json:"fqbn"`
 }
 
 type restMicroControllersList struct {
