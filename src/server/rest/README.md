@@ -81,7 +81,10 @@ Format:
             "vendor_name": "<vendor_name>",
             "product_name": "<product_name>",
             "port": "<port>",
-            "fqbn": "<fqbn>"
+            "fqbn": [
+                "<fqbn>",
+                ...
+            ]
         },
         ...
     ]
@@ -96,4 +99,4 @@ Fields:
 - `vendor_name`: Vendor name of the controller (ex: Arduino SA)
 - `product_name`: Product name of the controller (ex: Mega 2560 R3 (CDC ACM))
 - `port`: The port on which the card is linked (ex: "/dev/ttyUSB0")
-- `fqbn`: The type of the card, following the names of the `arduino-cli` (ex: "arduino:avr:uno"). If the device is not an Arduino, do not care of the value
+- `fqbn`: A list containing the possible types of the card (only one choice if it use a custom vendor/product id, several choices if it use a generic vendor/product id), following the names of the `arduino-cli` (ex: "arduino:avr:uno"). If the device is not an Arduino, do not care of the value
