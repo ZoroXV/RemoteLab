@@ -14,7 +14,7 @@ var (
 	LutVendorProductFqbn = map[VendorProduct][]string{
 		VendorProduct{0x2341, 0x0042}: []string{"arduino:avr:mega"},
 		VendorProduct{0x2341, 0x0043}: []string{"arduino:avr:uno"},
-		VendorProduct{0x1a86, 0x7523}: []string{"arduino:avr:mega", "arduino:avr:nano", "arduino:avr:uno"}
+		VendorProduct{0x1a86, 0x7523}: []string{"arduino:avr:mega", "arduino:avr:nano", "arduino:avr:uno"},
 
 	}
 )
@@ -25,6 +25,6 @@ func GetFqbn(VendorID uint16, ProductID uint16) ([]string, error) {
 	if exist {
 		return val, nil
 	} else {
-		return "", errors.New(fmt.Sprintf("{0x%04x, 0x%04x} is an unknown {VendorID, ProductID} pair.", VendorID, ProductID))
+		return []string{}, errors.New(fmt.Sprintf("{0x%04x, 0x%04x} is an unknown {VendorID, ProductID} pair.", VendorID, ProductID))
 	}
 }
