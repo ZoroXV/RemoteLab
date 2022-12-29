@@ -143,7 +143,7 @@ func (this RestListControllersHandler) ServeHTTP(w http.ResponseWriter, r *http.
             fqbn, err := upload.GetFqbn(controller.VendorID, controller.ProductID)
 
             if err != nil {
-                fqbn = fmt.Sprint(err)
+                fqbn = append(fqbn, fmt.Sprint(err))
             }
 
             resp.Data = append(resp.Data, restMicroControllerInfo{
