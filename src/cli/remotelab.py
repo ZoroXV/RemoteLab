@@ -9,7 +9,7 @@ import os
 import sys
 
 def parseargs():
-    parser = argparse.ArgumentParser(prog='./remotelab', description='RemoteLab CLI tool.')
+    parser = argparse.ArgumentParser(prog='./remotelab.py', description='RemoteLab CLI tool.')
 
     commands = parser.add_subparsers(dest='commands')
 
