@@ -66,6 +66,8 @@ def request(address, urlpath, method='GET', data=None, content_type=None):
 
 
 def flash(address, filename, port, fqbn):
+    print('Flash', filename, 'on port', port, '... ')
+
     data = {
         'port': port,
         'fqbn': fqbn,
@@ -74,11 +76,14 @@ def flash(address, filename, port, fqbn):
     status, data = request(address, '/command/upload', 'POST', json.dumps(data), 'application/json')
     
     if status != 200 or data['status'] != 'OK':
-        print('Error:', data['message'], file=sys.stderr)
+        print('ERROR')
+        print('' + data['message'], file=sys.stderr)
     else:
-        print('Success')
+        print('OK')
 
 def upload_file(address, filepath):
+    print('Upload file', filepath, '... ', end='')
+
     with open(filepath) as fp:
         filecontent = fp.read()
 
@@ -86,15 +91,24 @@ def upload_file(address, filepath):
     status, data = request(address, '/uploadfile', 'POST', body, content_type)
     
     if status != 200 or data['status'] != 'OK':
-        print('Error:', data['message'], file=sys.stderr)
+        print('ERROR')
+        print('' + data['message'], file=sys.stderr)
+        return -1
     else:
-        print('Success')
+        print('OK')
+        return 0
+
+def upload_files(address, filepaths):
+    for filepath in filepaths:
+        if upload_file(address, filepath) == -1:
+            return
 
 def list_controllers(address):
     status, data = request(address, '/command/list_controllers')
     
     if status != 200 or data['status'] != 'OK':
-        print('Error:', data['message'], file=sys.stderr)
+        print('ERROR')
+        print('' + data['message'], file=sys.stderr)
     else:
         for dev in data['data']:
             print(
@@ -112,7 +126,7 @@ def main ():
     if args.commands == 'flash':
         flash(args.address, args.filename[0], args.port, args.fqbn)
     elif args.commands == 'upload':
-        upload_file(args.address, args.filepath[0])
+        upload_files(args.address, args.filepath)
     elif args.commands == 'list':
         list_controllers(args.address)
 
