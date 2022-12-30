@@ -16,4 +16,5 @@ RUN apt-get update \
 RUN curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/usr/local/bin sh && arduino-cli core install arduino:avr
 WORKDIR /app
 COPY --from=builder /app/remotelab ./
+COPY --from=builder /app/cli/remotelab.py ./
 CMD ["./remotelab"]

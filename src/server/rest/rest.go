@@ -168,6 +168,10 @@ func (this RestListControllersHandler) ServeHTTP(w http.ResponseWriter, r *http.
     }
 }
 
+func (this RestServeCliScript) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+    http.ServeFile(w, r, "remotelab.py")
+}
+
 func RunREST(serv server.Server, wg *sync.WaitGroup) {
     restUploadFileHandler := RestUploadFileHandler{}
     serv.AddHandler("/uploadfile", restUploadFileHandler)
@@ -177,6 +181,9 @@ func RunREST(serv server.Server, wg *sync.WaitGroup) {
 
     restListControllersHandler := RestListControllersHandler{}
     serv.AddHandler("/command/list_controllers", restListControllersHandler)
+
+    restServeCliScript := RestServeCliScript{}
+    serv.AddHandler("/download/remotelab.py", restServeCliScript)
 
     serv.Run(wg)
 }
