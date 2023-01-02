@@ -2,7 +2,7 @@
 Description=RemoteLab Server
 
 [Service]
-WorkingDirectory=/home/remotelab/RemoteLab/
+WorkingDirectory=WORKING_DIR
 ExecStart= /bin/bash /usr/bin/remotelab.sh
 Restart=on-failure
 RestartSec=10
