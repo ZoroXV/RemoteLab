@@ -17,6 +17,7 @@ SUDO_HOME=/home/$SUDO_USER
 INSTALL_DIR=$SUDO_HOME/.remotelab
 BIN_DIR=/usr/bin
 SERVICE_DIR=/etc/systemd/system
+HOSTNAME=$(hostname)
 
 # Copy installation files to installation location
 echo -n "Create folders... "
@@ -26,6 +27,7 @@ echo -n "Copy files... "
 sudo -u $REAL_USER cp docker-compose.yml $INSTALL_DIR
 sudo -u $REAL_USER cp Dockerfile $INSTALL_DIR
 sudo -u $REAL_USER cp -r src/ $INSTALL_DIR
+sudo -u $REAL_USER sed -i "s~RPI_IP~$HOSTNAME~g" $INSTALL_DIR/src/frontend/app.py
 cp daemon/launch.sh $BIN_DIR/remotelab.sh
 sed "s~WORKING_DIR~$SUDO_HOME/.remotelab~g" daemon/remotelab.service > $SERVICE_DIR/remotelab.service
 echo "OK"
@@ -42,7 +44,7 @@ fi
 echo "OK"
 echo -n "Enable systemctl service... "
 chmod +x $BIN_DIR/remotelab.sh
-systemctl enable --now remotelab.service
+systemctl enable --now remotelab.service &>/dev/null
 echo "OK"
 
 echo "Installation successful"
