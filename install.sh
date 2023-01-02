@@ -28,6 +28,7 @@ sudo -u $REAL_USER cp docker-compose.yml $INSTALL_DIR
 sudo -u $REAL_USER cp Dockerfile $INSTALL_DIR
 sudo -u $REAL_USER cp -r src/ $INSTALL_DIR
 sudo -u $REAL_USER sed -i "s~RPI_IP~$HOSTNAME~g" $INSTALL_DIR/src/frontend/app.py
+sudo -u $REAL_USER sed -i "s~RPI_IP~$HOSTNAME~g" $INSTALL_DIR/src/cli/remotelab.py
 cp daemon/launch.sh $BIN_DIR/remotelab.sh
 sed "s~WORKING_DIR~$SUDO_HOME/.remotelab~g" daemon/remotelab.service > $SERVICE_DIR/remotelab.service
 echo "OK"

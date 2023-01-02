@@ -14,34 +14,28 @@ chmod +x remotelab.py
 
 #### Flash
 ```sh
-./remotelab.py flash [-h] -a ADDRESS -f FQBN -p PORT filename
+./remotelab.py flash [-h] -f FQBN -p PORT filename
 
 Arguments:
   filename              the name of the file to flash on the microcontroller
   -h, --help            show this help message and exit
-  -a ADDRESS, --address ADDRESS
-                        the ip:port address of the server (port is always 8080)
   -f FQBN, --fqbn FQBN  the type of the card, following the names of the `arduino-cli` (ex: "arduino:avr:uno")
   -p PORT, --port PORT  the port on which the card is linked (ex: "/dev/ttyUSB0")
 ```
 
 #### Upload files
 ```sh
-./remotelab.py upload [-h] -a ADDRESS filepath [filepath ...]
+./remotelab.py upload [-h] filepath [filepath ...]
 
 Arguments:
   filepath              the full path of the file(s) to upload on the server
   -h, --help            show this help message and exit
-  -a ADDRESS, --address ADDRESS
-                        the ip:port address of the server (port is always 8080)
 ```
 
 #### List microcontrollers
 ```sh
-./remotelab.py list [-h] -a ADDRESS
+./remotelab.py list [-h]
 
 Arguments:
   -h, --help            show this help message and exit
-  -a ADDRESS, --address ADDRESS
-                        the ip:port address of the server (port is always 8080)
 ```

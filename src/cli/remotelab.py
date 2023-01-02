@@ -8,6 +8,10 @@ import binascii
 import os
 import sys
 
+raspberrypi_server_ip = 'RPI_IP'
+raspberrypi_server_port = '8080'
+raspberrypi_server_address = 'http://' + raspberrypi_server_ip + ':' + raspberrypi_server_port
+
 def parseargs():
     parser = argparse.ArgumentParser(prog='./remotelab.py', description='RemoteLab CLI tool.')
 
@@ -15,16 +19,13 @@ def parseargs():
 
     flash_command = commands.add_parser('flash')
     flash_command.add_argument('filename', nargs=1, help='the name of the file to flash on the microcontroller')
-    flash_command.add_argument('-a', '--address', required=True, help='the ip address of the server')
     flash_command.add_argument('-f', '--fqbn', dest='fqbn', required=True, help='the type of the card, following the names of the `arduino-cli` (ex: "arduino:avr:uno")')
     flash_command.add_argument('-p', '--port', dest='port', required=True, help='the port on which the card is linked (ex: "/dev/ttyUSB0")')
     
     upload_file_command = commands.add_parser('upload')
     upload_file_command.add_argument('filepath', nargs='+', help='the full path of the file(s) to upload on the server')
-    upload_file_command.add_argument('-a', '--address', required=True, help='the ip address of the server')
 
-    list_controllers_command = commands.add_parser('list')
-    list_controllers_command.add_argument('-a', '--address', required=True, help='the ip address of the server')
+    _ = commands.add_parser('list')
 
     return parser.parse_args()
 
@@ -46,7 +47,7 @@ def encode_multipart_formdata(filename, filecontent):
     return body, content_type
 
 def request(address, urlpath, method='GET', data=None, content_type=None):
-    url = 'http://' + address + urlpath
+    url = address + urlpath
     
     headers = {}
     if content_type != None:
@@ -124,11 +125,11 @@ def main ():
     args = parseargs()
     
     if args.commands == 'flash':
-        flash(args.address, args.filename[0], args.port, args.fqbn)
+        flash(raspberrypi_server_address, args.filename[0], args.port, args.fqbn)
     elif args.commands == 'upload':
-        upload_files(args.address, args.filepath)
+        upload_files(raspberrypi_server_address, args.filepath)
     elif args.commands == 'list':
-        list_controllers(args.address)
+        list_controllers(raspberrypi_server_address)
 
 if __name__ == '__main__':
     main()
