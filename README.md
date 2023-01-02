@@ -21,7 +21,7 @@ We use this [article](https://buzut.net/cours/versioning-avec-git/bien-nommer-se
 
 ```sh
 chmod +x install.sh # If the script does not have the right to be executed
-./install.sh
+sudo ./install.sh
 ```
 
 Running this command install RemoteLab to `$HOME/.remotelab` and enable a service called `remotelab.service` which run and restart automatically the server.
@@ -38,5 +38,5 @@ docker compose build
 
 ### Run
 ```sh
-docker compose up release
+docker compose up
 ```

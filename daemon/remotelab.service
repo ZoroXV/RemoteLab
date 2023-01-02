@@ -1,5 +1,5 @@
 [Unit]
-Description=RemoteLab Server
+Description=RemoteLab
 
 [Service]
 WorkingDirectory=WORKING_DIR
