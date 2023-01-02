@@ -3,7 +3,7 @@
 ### Download
 To get the CLI tool, the easiest way is to download it from the running server:
 ```sh
-wget <raspberrypi_ip>/download/remotelab.py
+wget <raspberrypi_ip>:8080/download/remotelab.py
 chmod +x remotelab.py
 ```
 
@@ -20,7 +20,7 @@ Arguments:
   filename              the name of the file to flash on the microcontroller
   -h, --help            show this help message and exit
   -a ADDRESS, --address ADDRESS
-                        the ip address of the server
+                        the ip:port address of the server (port is always 8080)
   -f FQBN, --fqbn FQBN  the type of the card, following the names of the `arduino-cli` (ex: "arduino:avr:uno")
   -p PORT, --port PORT  the port on which the card is linked (ex: "/dev/ttyUSB0")
 ```
@@ -33,7 +33,7 @@ Arguments:
   filepath              the full path of the file(s) to upload on the server
   -h, --help            show this help message and exit
   -a ADDRESS, --address ADDRESS
-                        the ip address of the server
+                        the ip:port address of the server (port is always 8080)
 ```
 
 #### List microcontrollers
@@ -43,5 +43,5 @@ Arguments:
 Arguments:
   -h, --help            show this help message and exit
   -a ADDRESS, --address ADDRESS
-                        the ip address of the server
+                        the ip:port address of the server (port is always 8080)
 ```
