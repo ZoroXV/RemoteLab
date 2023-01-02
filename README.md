@@ -17,15 +17,26 @@ We use this [article](https://buzut.net/cours/versioning-avec-git/bien-nommer-se
 - Code on new branch for each feature
 - Make **Pull Request** and get reviewed by the others
 
-## Build & Run Project
+## Install RemoteLab
 
-### Run Docker Image in RELEASE mode
+```sh
+chmod +x install.sh # If the script does not have the right to be executed
+./install.sh
+```
+
+Running this command install RemoteLab to `$HOME/.remotelab` and enable a service called `remotelab.service` which run and restart automatically the server.
+
+## Build & Run Project
+```sh
+cd <remotelab_location>
+```
+
+### Build
+```sh
+docker compose build
+```
+
+### Run
 ```sh
 docker compose up release
 ```
-
-### Raspberry Pi Daemon
-
-We use a simple daemon to launch our server at the start of the Raspberry Pi.
-Our daemon will restart the server if a error occur.
-Our daemon execute a simple bash script that run our Docker Image.
