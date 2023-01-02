@@ -1,8 +1,8 @@
 services:
-  release:
-    container_name: remotelab_release
+  release_server:
+    container_name: remotelab_server_release
     ports:
-      - "80:8080"
+      - "8080:8080"
     volumes:
       - /dev:/dev
       - /run/udev:/run/udev:ro 
@@ -11,5 +11,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: release 
+      target: release_server
+  release_gui:
+    container_name: remotelab_gui_release
+    ports:
+      - "80:5000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: release_gui
 
