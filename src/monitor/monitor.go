@@ -13,6 +13,8 @@ import (
 
 const (
 	DEVNAME = "DEVNAME"
+	ID_SERIAL = "ID_SERIAL"
+	ID_SERIAL_SHORT = "ID_SERIAL_SHORT"
 	RULE_VENDOR_ID = "ID_VENDOR_ID"
 	RULE_MODEL_ID = "ID_MODEL_ID"
 	ARDUINO_VENDOR_ID gousb.ID = 0x2341
@@ -53,7 +55,7 @@ func ListMicrocontrollers() []microControllerInfos {
 		log.Fatalf("[MONITOR][LIST_CONTROLLERS][ERR] An error occured while listing usb devices.\n\t%v\n", err)
 	}
 
-	// Get port
+	// Get port and serial number
 	sc := libudev.NewScanner()
 	err, udevDevices := sc.ScanDevices()
 
@@ -64,14 +66,25 @@ func ListMicrocontrollers() []microControllerInfos {
 	for i, dev := range microContInfos {
 		m := matcher.NewMatcher()
 		m.SetStrategy(matcher.StrategyAnd)
-		m.AddRule(matcher.NewRuleEnv(RULE_VENDOR_ID, fmt.Sprintf("%04x", uint16(dev.VendorID))))
-		m.AddRule(matcher.NewRuleEnv(RULE_MODEL_ID, fmt.Sprintf("%04x", uint16(dev.ProductID))))
+		m.AddRule(matcher.NewRuleEnv(RULE_VENDOR_ID, fmt.Sprintf("%04x", dev.VendorID)))
+		m.AddRule(matcher.NewRuleEnv(RULE_MODEL_ID, fmt.Sprintf("%04x", dev.ProductID)))
 		filteredUdevDevices := m.Match(udevDevices)
 
 		for _, fDev := range filteredUdevDevices {
 			matched, err := regexp.MatchString(`tty.*`, fDev.Env[DEVNAME])
 			if err == nil && matched {
-				microContInfos[i].Port = fmt.Sprintf("/dev/%s", fDev.Env[DEVNAME])
+				if dev.VendorID == uint16(STM32_VENDOR_ID) {
+					// Serial number
+					if fDev.Env[ID_SERIAL_SHORT] != "" {
+						microContInfos[i].SerialNumber = fDev.Env[ID_SERIAL_SHORT]
+					} else {
+						microContInfos[i].SerialNumber = fDev.Env[ID_SERIAL]
+					}
+				} else {
+					// Port
+					microContInfos[i].Port = fmt.Sprintf("/dev/%s", fDev.Env[DEVNAME])
+				}
+				
 				break
 			}
 		}

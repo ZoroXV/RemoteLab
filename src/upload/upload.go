@@ -15,7 +15,7 @@ func Upload(serialNumber string, startAddress string, port string, cardType stri
     if cardType != "" {
         return uploadArduino(port, cardType, inputFile)
     } else {
-        return uploadSTM(port, serialNumber, inputFile, startAddress)
+        return uploadSTM(serialNumber, startAddress, inputFile)
     }
 }
 
@@ -38,7 +38,7 @@ func uploadArduino(port string, cardType string, inputFile string) error {
     return nil
 }
 
-func uploadSTM(port string, serial string, inputFile string, startAddress string) error {
+func uploadSTM(serial string, startAddress string, inputFile string) error {
     _, err := strconv.ParseInt(startAddress, 16, 64)
 
     if err != nil {
@@ -54,7 +54,7 @@ func uploadSTM(port string, serial string, inputFile string, startAddress string
 
     err = cmd.Run()
     if err != nil {
-        log.Printf("[UPLOAD][STM32][ERR] Fail to upload '%s' on card 'STM32', serial '%s', port '%s'.\n\t%v\n", inputFile, serial, port, err)
+        log.Printf("[UPLOAD][STM32][ERR] Fail to upload '%s' on card 'STM32', serial '%s'.\n\t%v\n", inputFile, serial, err)
         return err
     }
 
