@@ -11,7 +11,15 @@ func UploadInit() {
     log.Printf("[UPLOAD] Load configuration...\n")
 }
 
-func UploadArduino(port string, cardType string, inputFile string) error {
+func Upload(serialNumber string, startAddress string, port string, cardType string, inputFile string) error {
+    if cardType != "" {
+        return uploadArduino(port, cardType, inputFile)
+    } else {
+        return uploadSTM(port, serialNumber, inputFile, startAddress)
+    }
+}
+
+func uploadArduino(port string, cardType string, inputFile string) error {
     cmd := exec.Command(
         "arduino-cli",
         "upload",
@@ -30,7 +38,7 @@ func UploadArduino(port string, cardType string, inputFile string) error {
     return nil
 }
 
-func UploadSTM(port string, serial string, inputFile string, startAddress string) error {
+func uploadSTM(port string, serial string, inputFile string, startAddress string) error {
     _, err := strconv.ParseInt(startAddress, 16, 64)
 
     if err != nil {
