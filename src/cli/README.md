@@ -14,13 +14,17 @@ chmod +x remotelab.py
 
 #### Flash
 ```sh
-./remotelab.py flash [-h] -f FQBN -p PORT filename
+./remotelab.py flash [-h] [-f FQBN] [-p PORT] [-n SERIAL_NUMBER] [-a START_ADDRESS] filename
 
 Arguments:
   filename              the name of the file to flash on the microcontroller
   -h, --help            show this help message and exit
   -f FQBN, --fqbn FQBN  the type of the card, following the names of the `arduino-cli` (ex: "arduino:avr:uno")
   -p PORT, --port PORT  the port on which the card is linked (ex: "/dev/ttyUSB0")
+  -n SERIAL_NUMBER, --serial_number SERIAL_NUMBER
+                        the serial number of the card
+  -a START_ADDRESS, --start_address START_ADDRESS
+                        the address of the flash, where to store the program in the card
 ```
 
 #### Upload files
