@@ -1,6 +1,6 @@
 # REST API description
 
-### `/uploadfile`
+### `/command/uploadfile`
 
 #### Request
 
