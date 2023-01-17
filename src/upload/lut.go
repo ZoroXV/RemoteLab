@@ -3,12 +3,17 @@ package upload
 import (
 	"errors"
 	"fmt"
+	"github.com/google/gousb"
 )
 
 type VendorProduct struct {
 	Vendor	uint16
 	Product	uint16
 }
+
+const (
+	STM32_VENDOR_ID gousb.ID = 0x0483
+)
 
 var (
 	LutVendorProductFqbn = map[VendorProduct][]string{
@@ -20,6 +25,10 @@ var (
 )
 
 func GetFqbn(VendorID uint16, ProductID uint16) ([]string, error) {
+	if VendorID == uint16(STM32_VENDOR_ID) {
+		return []string{}, nil
+	}
+
 	val, exist := LutVendorProductFqbn[VendorProduct{VendorID, ProductID}]
 
 	if exist {
