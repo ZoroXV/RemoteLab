@@ -114,12 +114,19 @@ def list_controllers(address):
         for dev in data['data']:
             print(
                 '\033[91;4m%s:\033[0m\n'
-                '\t* \033[94;4mVendor:\033[0m %s\n'
-                '\t* \033[94;4mPort:\033[0m %s\n'
-                '\t* \033[94;4mFqbn:\033[0m'
-                 % (dev['product_name'], dev['vendor_name'], dev['port']))
-            for fqbn in dev['fqbn']:
-                print('\t\t* %s\n' % fqbn, end='')
+                '\t* \033[94;4mVendor:\033[0m %s'
+                % (dev['product_name'], dev['vendor_name']))
+            if dev['serial_number'] == '':
+                print(
+                    '\t* \033[94;4mPort:\033[0m %s\n'
+                    '\t* \033[94;4mFqbn:\033[0m'
+                    % (dev['port']))
+                for fqbn in dev['fqbn']:
+                    print('\t\t* %s\n' % fqbn, end='')
+            else:
+                print(
+                    '\t* \033[94;4mSerial number:\033[0m %s'
+                    % (dev['serial_number']))
 
 def main ():
     args = parseargs()
