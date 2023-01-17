@@ -19,8 +19,10 @@ def parseargs():
 
     flash_command = commands.add_parser('flash')
     flash_command.add_argument('filename', nargs=1, help='the name of the file to flash on the microcontroller')
-    flash_command.add_argument('-f', '--fqbn', dest='fqbn', required=True, help='the type of the card, following the names of the `arduino-cli` (ex: "arduino:avr:uno")')
-    flash_command.add_argument('-p', '--port', dest='port', required=True, help='the port on which the card is linked (ex: "/dev/ttyUSB0")')
+    flash_command.add_argument('-f', '--fqbn', dest='fqbn', help='the type of the card, following the names of the `arduino-cli` (ex: "arduino:avr:uno")')
+    flash_command.add_argument('-p', '--port', dest='port', help='the port on which the card is linked (ex: "/dev/ttyUSB0")')
+    flash_command.add_argument('-n', '--serial_number', dest='serial_number', help='the serial number of the card')
+    flash_command.add_argument('-a', '--start_address', dest='start_address', help='the address of the flash, where to store the program in the card')
     
     upload_file_command = commands.add_parser('upload')
     upload_file_command.add_argument('filepath', nargs='+', help='the full path of the file(s) to upload on the server')
@@ -65,11 +67,15 @@ def request(address, urlpath, method='GET', data=None, content_type=None):
     except URLError as err:
         return -1, err.reason
 
-
-def flash(address, filename, port, fqbn):
-    print('Flash', filename, 'on port', port, '... ')
+def flash(address, filename, port, fqbn, serial_number, start_address):
+    if serial_number != '':
+        print('Flash', filename, 'on controller with serial number', serial_number, 'at address', start_address, '... ')
+    else:
+        print('Flash', filename, 'on port', port, '... ')
 
     data = {
+        'serial_number': serial_number,
+        'start_address': start_address,
         'port': port,
         'fqbn': fqbn,
         'filename': filename
@@ -132,7 +138,20 @@ def main ():
     args = parseargs()
     
     if args.commands == 'flash':
-        flash(raspberrypi_server_address, args.filename[0], args.port, args.fqbn)
+        if (args.port and not args.fqbn):
+            print('ERROR: "fqbn" is required', file=sys.stderr)
+            exit(1)
+        if (args.fqbn and not args.port):
+            print('ERROR: "port" is required', file=sys.stderr)
+            exit(1)
+        if (args.serial_number and not args.start_address):
+            print('ERROR: "start_address" is required', file=sys.stderr)
+            exit(1)
+        if (args.start_address and not args.serial_number):
+            print('ERROR: "serial_number" is required', file=sys.stderr)
+            exit(1)
+        
+        flash(raspberrypi_server_address, args.filename[0], args.port, args.fqbn, args.serial_number, args.start_address)
     elif args.commands == 'upload':
         upload_files(raspberrypi_server_address, args.filepath)
     elif args.commands == 'list':
