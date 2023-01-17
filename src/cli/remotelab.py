@@ -89,7 +89,7 @@ def upload_file(address, filepath):
         filecontent = fp.read()
 
     body, content_type = encode_multipart_formdata(os.path.basename(filepath), filecontent)
-    status, data = request(address, '/uploadfile', 'POST', body, content_type)
+    status, data = request(address, '/command/uploadfile', 'POST', body, content_type)
     
     if status != 200 or data['status'] != 'OK':
         print('ERROR')

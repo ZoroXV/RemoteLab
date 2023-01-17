@@ -174,7 +174,7 @@ func (this RestServeCliScript) ServeHTTP(w http.ResponseWriter, r *http.Request)
 
 func RunREST(serv server.Server, wg *sync.WaitGroup) {
     restUploadFileHandler := RestUploadFileHandler{}
-    serv.AddHandler("/uploadfile", restUploadFileHandler)
+    serv.AddHandler("/command/uploadfile", restUploadFileHandler)
 
     restUploadHandler := RestUploadHandler{}
     serv.AddHandler("/command/upload", restUploadHandler)

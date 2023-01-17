@@ -31,7 +31,7 @@ def upload_binary():
 
     data = {'name': uploaded_file.filename}
     files = {'file': open(uploaded_file.filename, 'rb')}
-    response = requests.post(raspberrypi_server_address + '/uploadfile', data=data, files=files)
+    response = requests.post(raspberrypi_server_address + '/command/uploadfile', data=data, files=files)
     return redirect(url_for('index'), code=302)
 
 if __name__ == '__main__':
