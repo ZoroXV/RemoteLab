@@ -4,6 +4,7 @@ import (
     "log"
     "os/exec"
     "strconv"
+    "strings"
 )
 
 func UploadInit() {
@@ -39,7 +40,8 @@ func uploadArduino(port string, cardType string, inputFile string) error {
 }
 
 func uploadSTM(serial string, startAddress string, inputFile string) error {
-    _, err := strconv.ParseInt(startAddress, 16, 64)
+    startAddressCleaned := strings.Replace(startAddress, "0x", "", -1)
+    _, err := strconv.ParseInt(startAddressCleaned, 16, 64)
 
     if err != nil {
         log.Printf("[UPLOAD][STM32][ERR] Invalid start address '%s'.\n\t%v\n", startAddress, err)
