@@ -63,15 +63,15 @@ func (this RestUploadFileHandler) ServeHTTP(w http.ResponseWriter, r *http.Reque
     }
 }
 
-func uploadCommand(port string, fqbn string, filename string) error {
+func uploadCommand(serialNumber string, startAddress string, port string, fqbn string, filename string) error {
     if !utils.FileExists(server.ROOT_FILE_PATH, filename) {
         return errors.New(fmt.Sprintf("File '%s' does not exists. Upload the file before running this command again.", filename))
     }
 
-    return upload.UploadArduino(port, fqbn, utils.GetFullPath(server.ROOT_FILE_PATH, filename))
+    return upload.Upload(serialNumber, startAddress, port, fqbn, utils.GetFullPath(server.ROOT_FILE_PATH, filename))
 }
 
-func handleUpload(w http.ResponseWriter, r *http.Request) {
+func handleUpload(w http.ResponseWriter, r *http.Request) { 
     var newReq restUploadRequest
     resp := restResponse {
         Status:	    "OK",
@@ -99,7 +99,7 @@ func handleUpload(w http.ResponseWriter, r *http.Request) {
                 Message:    fmt.Sprintf("Fail to decode json. %v", err),
             }
         } else {
-            err := uploadCommand(newReq.Port, newReq.Fqbn, newReq.FileName)
+            err := uploadCommand(newReq.SerialNumber, newReq.StartAddress, newReq.Port, newReq.Fqbn, newReq.FileName)
 
             if err != nil {
                 returnCode = http.StatusInternalServerError
@@ -149,6 +149,7 @@ func (this RestListControllersHandler) ServeHTTP(w http.ResponseWriter, r *http.
             resp.Data = append(resp.Data, restMicroControllerInfo{
                 VendorName: controller.VendorName,
 	            ProductName: controller.ProductName,
+                SerialNumber: controller.SerialNumber,
 	            Port: controller.Port,
 	            Fqbn: fqbn,
             })
