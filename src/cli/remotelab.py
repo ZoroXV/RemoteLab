@@ -91,7 +91,7 @@ def flash(address, filename, port, fqbn, serial_number, start_address):
 def upload_file(address, filepath):
     print('Upload file', filepath, '... ', end='')
 
-    with open(filepath) as fp:
+    with open(filepath, 'rb') as fp:
         filecontent = fp.read()
 
     body, content_type = encode_multipart_formdata(os.path.basename(filepath), filecontent)
