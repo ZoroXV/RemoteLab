@@ -20,6 +20,7 @@ var (
 		VendorProduct{0x2341, 0x0042}: []string{"arduino:avr:mega"},
 		VendorProduct{0x2341, 0x0043}: []string{"arduino:avr:uno"},
 		VendorProduct{0x1a86, 0x7523}: []string{"arduino:avr:mega", "arduino:avr:nano", "arduino:avr:uno"},
+		VendorProduct{0x0403, 0x6001}: []string{"arduino:avr:mega", "arduino:avr:nano", "arduino:avr:uno"},
 
 	}
 )

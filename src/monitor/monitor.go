@@ -20,10 +20,11 @@ const (
 	ARDUINO_VENDOR_ID gousb.ID = 0x2341
 	STM32_VENDOR_ID gousb.ID = 0x0483
 	WCH_VENDOR_ID gousb.ID = 0x1a86 //Correpond to CH340 Serial Converter
+	FUTURE_TECH_VENDOR_ID gousb.ID = 0x0403
 )
 
 var (
-	vendorIds = []gousb.ID{ARDUINO_VENDOR_ID, STM32_VENDOR_ID, WCH_VENDOR_ID}
+	vendorIds = []gousb.ID{ARDUINO_VENDOR_ID, STM32_VENDOR_ID, WCH_VENDOR_ID, FUTURE_TECH_VENDOR_ID}
 )
 
 func ListMicrocontrollers() []microControllerInfos {
