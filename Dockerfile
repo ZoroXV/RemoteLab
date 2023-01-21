@@ -21,6 +21,7 @@ CMD ["./remotelab"]
 
 FROM python:latest as release_gui
 WORKDIR /app
-COPY ./src/frontend /app
+COPY ./src/frontend/requirements.txt /app
 RUN ["pip3", "install", "-r", "requirements.txt"]
+COPY ./src/frontend /app
 CMD ["python3", "app.py"]
