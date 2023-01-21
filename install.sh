@@ -19,6 +19,14 @@ BIN_DIR=/usr/bin
 SERVICE_DIR=/etc/systemd/system
 HOSTNAME=$(hostname)
 
+# Check if Docker is installed
+docker version &>/dev/null
+RET_VAL=$?
+if [ $RET_VAL -ne 0 ]; then
+    echo "Docker is not installed." >&2
+    exit $RET_VAL
+fi
+
 # Copy installation files to installation location
 echo -n "Create folders... "
 sudo -u $REAL_USER mkdir -p $INSTALL_DIR
