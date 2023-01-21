@@ -1,15 +1,45 @@
 {% block upload_command %}
-    <div class="widget">
-        <div class="widget-title">
-            <p>Upload Command</p>
-        </div>
-        <div class="widget-content">
+    <div class="column">
+        <div class="box">
+            <div class="title">
+                <p>Upload Command</p>
+            </div>
             <form action="/upload_command" method="POST">
-                <div>
-                    <label>Port: <input type="text" name="port"></label>
-                    <label>Fqbn: <input type="text" name="fqbn"></label>
-                    <label>Filename: <input type="text" name="filename"></label>
-                    <input type="submit" value="Upload">
+                <div class="field">
+                    <label class="label">Port</label>
+                    <div class="control">
+                        <input class="input" type=text" name="port" placeholder="ex. /dev/ttyUSB0">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">FQBN</label>
+                    <div class="control">
+                        <input class="input" type=text" name="fqbn" placeholder="ex. arduino:avr:uno">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Serial Number</label>
+                    <div class="control">
+                        <input class="input" type=text" name="serial_number" placeholder="ex. ...">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Start Address</label>
+                    <div class="control">
+                        <input class="input" type=text" name="start_address" placeholder="ex. 0x80000">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Filename</label>
+                    <div class="control">
+                        <input class="input" type=text" name="filename" placeholder="ex. example.bin">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <input type="submit" class="button is-primary" value="Flash Card"/>
+                    </div>
                 </div>
             </form>
         </div>
