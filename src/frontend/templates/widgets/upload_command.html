@@ -1,14 +1,15 @@
 {% block upload_command %}
     <div class="column">
         <div class="box">
-            <div class="title">
-                <p>Upload Command</p>
+            <h1 class="title">Upload Command</h1>
+            <div class="subtitle">
+                <p>{{ controller["vendor_name"] }} - {{ controller["product_name"] }}</p>
             </div>
             <form action="/upload_command" method="POST">
                 <div class="field">
                     <label class="label">Port</label>
                     <div class="control">
-                        <input class="input" type=text" name="port" placeholder="ex. /dev/ttyUSB0">
+                        <input class="input" type=text" name="port" placeholder="ex. /dev/ttyUSB0" value="{{ controller["port"] }}">
                     </div>
                 </div>
                 <div class="field">
@@ -20,7 +21,7 @@
                 <div class="field">
                     <label class="label">Serial Number</label>
                     <div class="control">
-                        <input class="input" type=text" name="serial_number" placeholder="ex. ...">
+                        <input class="input" type=text" name="serial_number" placeholder="ex. 020000041FF8E3" value="{{ controller["serial_number"] }}">
                     </div>
                 </div>
                 <div class="field">

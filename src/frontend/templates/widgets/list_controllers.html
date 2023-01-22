@@ -1,0 +1,29 @@
+{% block list_controllers %}
+<div class="column">
+    <div class="box">
+        <div class="title">
+            <p>Available Controllers</p>
+        </div>
+        <form action="/choose_controller" method="POST">
+            <div class="field">
+                <label class="label">Available Controllers</label>
+                <div class="select is-fullwidth">
+                    <select name="controller">
+                        {% for controller in data %}
+                        <option>{{ controller }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <input type="submit" class="button is-primary" value="Choose Controller"/>
+                </div>
+                <div class="control">
+                    <input type="submit" name="update" class="button is-light" value="Update List">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

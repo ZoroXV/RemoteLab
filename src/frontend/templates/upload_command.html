@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="title is-1"><a href="{{ url_for('index') }}">{% block title %} RemoteLab {% endblock %}</a></h1>
+    <div class="columns">
+        {% include 'widgets/upload_command.html' %}
+    </div>
+</div>
+{% endblock %}
