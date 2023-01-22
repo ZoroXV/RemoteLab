@@ -14,8 +14,13 @@
                 </div>
                 <div class="field">
                     <label class="label">FQBN</label>
-                    <div class="control">
-                        <input class="input" type=text" name="fqbn" placeholder="ex. arduino:avr:uno">
+                    <div class="select is-fullwidth">
+                        <select name="controller">
+                            <option></option>
+                            {% for fqbn in controller["fqbn"] %}
+                            <option>{{ fqbn }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div class="field">
