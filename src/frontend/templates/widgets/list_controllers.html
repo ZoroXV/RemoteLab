@@ -10,7 +10,7 @@
                 <div class="select is-fullwidth">
                     <select name="controller">
                         {% for controller in data %}
-                        <option>{{ controller }}</option>
+                        <option value="{{ controller }}">{{ controller.product_name }} ({{ controller.vendor_name }})</option>
                         {% endfor %}
                     </select>
                 </div>
