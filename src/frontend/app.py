@@ -9,33 +9,8 @@ raspberrypi_server_address = 'http://' + raspberrypi_server_ip + ':' + raspberry
 
 @app.route('/')
 def index():
-    data_raw = """
-    {
-        "status": "OK",
-        "message": "",
-        "data": [
-            {
-                "vendor_name": "Arduino SA",
-                "product_name": "Uno",
-                "serial_number": "",
-                "port": "/dev/ttyUSB0",
-                "fqbn": [
-                    "arduino:avr:mega",
-                    "arduino:avr:uno"
-                ]
-            },
-            {
-                "vendor_name": "STMicroelectronics",
-                "product_name": "ST Link",
-                "serial_number": "020000041FF8E3",
-                "port": "",
-                "fqbn": []
-            }
-        ]
-    }
-    """
-
-    data = json.loads(data_raw)
+    data_raw = requests.get(raspberrypi_server_address + '/command/list_controllers')
+    data = data_raw.json()
     return render_template('index.html', data=data['data'])
 
 @app.route('/choose_controller', methods=["POST"])
