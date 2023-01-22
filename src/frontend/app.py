@@ -3,7 +3,7 @@ import requests
 import json
 
 app = Flask(__name__)
-raspberrypi_server_ip = 'RPI_IP'
+raspberrypi_server_ip = 'remotelab_server_release'
 raspberrypi_server_port = '8080'
 raspberrypi_server_address = 'http://' + raspberrypi_server_ip + ':' + raspberrypi_server_port
 
