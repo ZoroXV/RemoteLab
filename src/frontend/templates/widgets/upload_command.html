@@ -15,8 +15,7 @@
                 <div class="field">
                     <label class="label">FQBN</label>
                     <div class="select is-fullwidth">
-                        <select name="controller">
-                            <option></option>
+                        <select name="fqbn">
                             {% for fqbn in controller["fqbn"] %}
                             <option>{{ fqbn }}</option>
                             {% endfor %}
